@@ -43,7 +43,7 @@ export default function CadastroLogin() {
 
       if (response.ok) {
         localStorage.setItem("usuario", JSON.stringify(data.usuario || data));
-        navigate("/app");
+        navigate("/dashboard");
       } else {
         setMensagem(data.mensagem || "Erro ao processar a solicitação");
       }
