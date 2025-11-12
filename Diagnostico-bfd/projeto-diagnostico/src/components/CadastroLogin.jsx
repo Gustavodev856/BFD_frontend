@@ -83,6 +83,7 @@ export default function CadastroLogin() {
                   className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
+                
                 <select
                   name="cargo"
                   value={formData.cargo}
