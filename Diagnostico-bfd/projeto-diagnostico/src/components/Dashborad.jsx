@@ -52,7 +52,7 @@ export default function dashboard() {
 
         <div className="flex items-center gap-4">
           <span className="text-gray-700 font-medium">
-            👨‍⚕️ {usuario.nome || "Usuário"}
+             {usuario.nome || "Usuário"}
           </span>
           <button
             onClick={handleLogout}
@@ -72,22 +72,22 @@ export default function dashboard() {
       <main className="flex flex-wrap justify-center gap-6 px-6">
         <Card
           titulo="Ver Imagens Histopatológicas"
-          emoji="📷"
+          emoji=""
           onClick={() => navigate("/imagens")}
         />
         <Card
           titulo="Análise Automática"
-          emoji="🤖"
+          emoji=""
           onClick={() => navigate("/analise")}
         />
         <Card
           titulo="Gerar Laudo"
-          emoji="📄"
+          emoji=""
           onClick={() => navigate("/laudo")}
         />
         <Card
           titulo="Histórico / Log"
-          emoji="🧾"
+          emoji=""
           onClick={() => navigate("/log")}
         />
       </main>
