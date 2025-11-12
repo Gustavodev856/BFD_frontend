@@ -43,7 +43,7 @@ export default function CadastroLogin() {
 
       if (response.ok) {
         localStorage.setItem("usuario", JSON.stringify(data.usuario || data));
-        navigate("/app"); // Redireciona após login/cadastro
+        navigate("/app");
       } else {
         setMensagem(data.mensagem || "Erro ao processar a solicitação");
       }
@@ -56,7 +56,7 @@ export default function CadastroLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-xl rounded-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
-        {/* Formulário */}
+        
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
             {login ? "Acesse sua conta" : "Crie sua conta"}
@@ -159,7 +159,7 @@ export default function CadastroLogin() {
           </p>
         </div>
 
-        {/* Lado direito */}
+        
         <div className="hidden md:flex w-1/2 bg-blue-600 items-center justify-center text-white flex-col p-8">
           <h2 className="text-3xl font-bold mb-4">
             {login ? "Bem-vindo de volta!" : "Junte-se à nossa equipe!"}
