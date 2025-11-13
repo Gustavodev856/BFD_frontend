@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function CadastroLogin() {
+export default function Login() {
   const [login, setLogin] = useState(true);
   const [formData, setFormData] = useState({
     nome: "",
@@ -9,7 +9,6 @@ export default function CadastroLogin() {
     cargo: "",
     email: "",
     senha: "",
-    confirmarSenha: "",
   });
 
   const [mensagem, setMensagem] = useState("");
@@ -59,7 +58,7 @@ export default function CadastroLogin() {
         
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-            {login ? "Acesse sua conta" : "Crie sua conta"}
+            {login ? "Acesse sua conta" : "Adicionar Novo Usuário"}
           </h2>
 
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -93,22 +92,21 @@ export default function CadastroLogin() {
                 >
                   <option value="">Selecione o cargo</option>
                   <option value="medico">Médico</option>
-                  <option value="enfermeiro">Enfermeiro</option>
-                  <option value="recepcionista">Recepcionista</option>
                   <option value="administrador">Administrador</option>
                 </select>
               </>
             )}
 
-            <input
+            { <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="E-mail institucional"
+              placeholder="E-mail institucional / CPF"
               className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            />
+            /> }
+
 
             <input
               type="password"
@@ -120,17 +118,7 @@ export default function CadastroLogin() {
               required
             />
 
-            {!login && (
-              <input
-                type="password"
-                name="confirmarSenha"
-                value={formData.confirmarSenha}
-                onChange={handleChange}
-                placeholder="Confirmar senha"
-                className="border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            )}
+            
 
             {mensagem && (
               <p className="text-center text-red-600 font-semibold">
@@ -138,16 +126,17 @@ export default function CadastroLogin() {
               </p>
             )}
 
-            <button
-              type="submit"
-              className="bg-blue-600 text-white rounded-lg p-2 mt-2 hover:bg-blue-700 transition-all"
+              
+            <Link
+              to="/dashboard"
+              className=" bg-green-600 text-white rounded-lg p-2 mt-2 hover:bg-blue-700 transition-all"
             >
               {login ? "Entrar" : "Cadastrar"}
-            </button>
+            </Link>
           </form>
 
           <p className="text-center text-gray-600 mt-4">
-            {login ? "Não tem conta?" : "Já tem conta?"}{" "}
+           
             <button
               onClick={() => {
                 setLogin(!login);
@@ -155,13 +144,13 @@ export default function CadastroLogin() {
               }}
               className="text-blue-600 font-semibold hover:underline"
             >
-              {login ? "Cadastre-se" : "Fazer login"}
+              {login ? "" : "Solicitar suporte"}
             </button>
           </p>
         </div>
 
         
-        <div className="hidden md:flex w-1/2 bg-blue-600 items-center justify-center text-white flex-col p-8">
+        <div className="hidden md:flex w-1/2 bg-green-600 items-center justify-center text-white flex-col p-8">
           <h2 className="text-3xl font-bold mb-4">
             {login ? "Bem-vindo de volta!" : "Junte-se à nossa equipe!"}
           </h2>
