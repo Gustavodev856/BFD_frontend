@@ -129,7 +129,7 @@ export default function Login() {
               
             <Link
               to="/dashboard"
-              className=" bg-green-600 text-white rounded-lg p-2 mt-2 hover:bg-blue-700 transition-all"
+              className="text-center bg-green-600 text-white rounded-lg p-2 mt-2 hover:bg-blue-700 transition-all"
             >
               {login ? "Entrar" : "Cadastrar"}
             </Link>

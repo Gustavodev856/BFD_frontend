@@ -1,87 +1,183 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Dashboard() {
+  const [usuarios, setUsuarios] = useState([]);
+
+  const [form, setForm] = useState({
+    nome: "",
+    cpf: "",
+    cargo: "",
+    status: "Ativo",
+  });
+
+  
+  function gerarDataHora() {
+    const agora = new Date();
+    const data = agora.toLocaleDateString("pt-BR");
+    const hora = agora.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return `${data} ${hora}`;
+  }
+
+  
+  function cadastrar(e) {
+    e.preventDefault();
+
+    const novoUsuario = {
+      id: Date.now(),
+      ...form,
+      criadoEm: gerarDataHora(),
+    };
+
+    setUsuarios([...usuarios, novoUsuario]);
+
+    setForm({
+      nome: "",
+      cpf: "",
+      cargo: "",
+      status: "Ativo",
+    });
+  }
+
+  
+  function remover(id) {
+    setUsuarios(usuarios.filter((u) => u.id !== id));
+  }
+
+
+  const total = usuarios.length;
+  const ativos = usuarios.filter((u) => u.status === "Ativo").length;
+  const novosHoje = usuarios.filter((u) =>
+    u.criadoEm.startsWith(new Date().toLocaleDateString("pt-BR"))
+  ).length;
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      {/* Navegação lateral */}
+
+      
       <aside className="w-64 bg-white shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
+        <h2 className="text-xl font-bold mb-6">Painel</h2>
+
         <nav>
-          <ul className="space-y-4">
-            <li>
-              <Link
-                to="/Cadastro"
-                className="block text-blue-600 hover:underline"
-              >
-                Cadastrar Novo Usuário
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Consultar"
-                className="block text-blue-600 hover:underline"
-              >
-                Consultar Usuário
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Auditoria"
-                className="block text-blue-600 hover:underline"
-              >
-                Auditoria
-              </Link>
-            </li>
+          <ul className="space-y-4 text-blue-700">
+            <li><a className="hover:underline" href="#">Inicio</a></li>
+            <li><a className="hover:underline" href="#">Usuários</a></li>
+            <li><a className="hover:underline" href="#">Relatórios</a></li>
+            <li><a className="hover:underline" href="#">Configurações</a></li>
           </ul>
         </nav>
       </aside>
 
-      {/* Conteúdo principal */}
       <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-6">Visão Geral</h1>
+        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-        {/* Cards de estatísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white shadow rounded-lg p-6 text-center">
-            <p className="text-gray-500">Total de Usuários</p>
-            <p className="text-2xl font-bold">120</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+          <div className="bg-white p-4 shadow rounded">
+            <p className="text-gray-600">Total de Usuários</p>
+            <p className="text-2xl font-bold">{total}</p>
           </div>
-          <div className="bg-white shadow rounded-lg p-6 text-center">
-            <p className="text-gray-500">Usuários Ativos</p>
-            <p className="text-2xl font-bold">95</p>
+
+          <div className="bg-white p-4 shadow rounded">
+            <p className="text-gray-600">Ativos</p>
+            <p className="text-2xl font-bold">{ativos}</p>
           </div>
-          <div className="bg-white shadow rounded-lg p-6 text-center">
-            <p className="text-gray-500">Novos Cadastros</p>
-            <p className="text-2xl font-bold">8</p>
+
+          <div className="bg-white p-4 shadow rounded">
+            <p className="text-gray-600">Cadastros Hoje</p>
+            <p className="text-2xl font-bold">{novosHoje}</p>
           </div>
         </div>
 
-        {/* Tabela de usuários (exemplo) */}
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-bold mb-4">Últimos Usuários</h2>
-          <table className="min-w-full table-auto">
+      
+        <div className="bg-white p-4 shadow rounded mb-6">
+          <h2 className="text-lg font-bold mb-4">Novo Usuário</h2>
+
+          <form onSubmit={cadastrar} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              placeholder="Nome"
+              className="border p-2 rounded"
+              value={form.nome}
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+              required
+            />
+
+            <input
+              type="text"
+              placeholder="CPF"
+              className="border p-2 rounded"
+              value={form.cpf}
+              onChange={(e) => setForm({ ...form, cpf: e.target.value })}
+              required
+            />
+
+            <input
+              type="text"
+              placeholder="Cargo"
+              className="border p-2 rounded"
+              value={form.cargo}
+              onChange={(e) => setForm({ ...form, cargo: e.target.value })}
+              required
+            />
+
+            <select
+              className="border p-2 rounded"
+              value={form.status}
+              onChange={(e) => setForm({ ...form, status: e.target.value })}
+            >
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+            </select>
+
+            <button
+              className="bg-blue-600 text-white rounded p-2 mt-2 hover:bg-blue-700"
+              type="submit"
+            >
+              Salvar
+            </button>
+          </form>
+        </div>
+
+        
+        <div className="bg-white p-4 shadow rounded">
+          <h2 className="text-lg font-bold mb-4">Usuários Cadastrados</h2>
+
+          <table className="min-w-full text-sm">
             <thead>
               <tr className="bg-gray-200 text-left">
                 <th className="px-4 py-2">Nome</th>
                 <th className="px-4 py-2">CPF</th>
                 <th className="px-4 py-2">Cargo</th>
                 <th className="px-4 py-2">Status</th>
+                <th className="px-4 py-2">Criado em</th>
+                <th className="px-4 py-2">Ações</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr className="border-b">
-                <td className="px-4 py-2">João Silva</td>
-                <td className="px-4 py-2">123.456.789-00</td>
-                <td className="px-4 py-2">Médico</td>
-                <td className="px-4 py-2">Ativo</td>
-              </tr>
-              <tr className="border-b">
-                <td className="px-4 py-2">Maria Souza</td>
-                <td className="px-4 py-2">987.654.321-00</td>
-                <td className="px-4 py-2">Administrador</td>
-                <td className="px-4 py-2">Ativo</td>
-              </tr>
+              {usuarios.map((u) => (
+                <tr key={u.id} className="border-b">
+                  <td className="px-4 py-2">{u.nome}</td>
+                  <td className="px-4 py-2">{u.cpf}</td>
+                  <td className="px-4 py-2">{u.cargo}</td>
+                  <td className="px-4 py-2">{u.status}</td>
+                  <td className="px-4 py-2">{u.criadoEm}</td>
+
+                  <td className="px-4 py-2">
+                    <button
+                      onClick={() => remover(u.id)}
+                      className="text-red-600 hover:underline"
+                    >
+                      Excluir
+                    </button>
+                  </td>
+
+                </tr>
+              ))}
             </tbody>
+
           </table>
         </div>
       </main>
